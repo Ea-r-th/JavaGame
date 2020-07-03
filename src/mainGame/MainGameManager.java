@@ -36,11 +36,12 @@ public class MainGameManager {
 
     Light light = new Light(new Vector3f(0,0,0), new Vector3f(1,1,1));
 
-    int isClickDown = 0; //Checks if left mouse button is down
+    int isClickDown = 0; //Checks if left mouse button is down for the placing thing
+    public static boolean shouldDebugOpen = false;
 
     public static Camera camera = new Camera();
 
-    private List<Entity> blocks = new ArrayList<>(); //Creates the list of placed entities
+    private List<Entity> blocks = new ArrayList<>(); //Creates the list of placed entities, this is gonna go sayonara soon enough
 
     RawModel model2 = OBJLoader.loadObjModel("lowPolyTree", loader);
     ModelTexture texture = new ModelTexture(loader.loadTexture("Sonny"));
@@ -77,6 +78,12 @@ public class MainGameManager {
         }
     }
 
+    public void renderDebugMenu(){
+        if(shouldDebugOpen == true){
+            debugMenuManager.renderMenu();
+        }
+    }
+
     public void init(){
         createArmyOfCubes(); //creates the horde of trees
         debugMenuManager.init();
@@ -86,14 +93,12 @@ public class MainGameManager {
        textMaster.init();
     }
 
-    public void update(){
+    public void update(){ //Most of the stuff in here is pretty self explanatory, just ask Luca if you need help
         player.moveCursor();
 
         masterRenderer.render(light,camera);
         shader.start();
         staticShader.start();
-
-        debugMenuManager.renderMenu();
 
         shader.loadLight(light);
         shader.loadViewMatrix(camera);
@@ -118,6 +123,7 @@ public class MainGameManager {
         cursorTools.getCursorPosition(camera);
 
         crosshairManager.renderCrosshair();
+        renderDebugMenu();
 
         player.move();
 

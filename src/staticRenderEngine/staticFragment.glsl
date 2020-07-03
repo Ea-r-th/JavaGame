@@ -10,7 +10,7 @@ void main() {
 
     vec4 textureColor = texture(textureSampler, pass_textureCoords);
 
-    if(textureColor.a < 0.5){
+    if(textureColor.a < 0.5){ //Discards the transparent parts of a texture so it isn't rendered
         discard;
     }
 

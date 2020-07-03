@@ -3,14 +3,13 @@ package entities;
 import Models.TexturedModel;
 import org.joml.Vector3f;
 
-public class Entity
-{
+public class Entity {
     private TexturedModel model;
     private Vector3f position;
     private float rotX, rotY, rotZ;
     private float scale;
 
-    public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
+    public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) { //This object can be rendered by the entityRenderer
         this.model = model;
         this.position = position;
         this.rotX = rotX;
@@ -19,14 +18,14 @@ public class Entity
         this.scale = scale;
     }
 
-    public void increaseRotation(float dx, float dy, float dz)
+    public void increaseRotation(float dx, float dy, float dz) //Increasese rotation based on 3 values
     {
         this.rotX += dx;
         this.rotY += dy;
         this.rotZ += dz;
     }
 
-    public void increasePosition(float dx, float dy, float dz)
+    public void increasePosition(float dx, float dy, float dz) //Increases posiiton vector values
     {
         this.position.x += dx;
         this.position.y += dy;

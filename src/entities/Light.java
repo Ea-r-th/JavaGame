@@ -8,8 +8,7 @@ public class Light
     private Vector3f position;
     private Vector3f color;
 
-    public Light(Vector3f position, Vector3f color)
-    {
+    public Light(Vector3f position, Vector3f color) { //Creates a light object
         this.position = position;
         this.color = color;
     }

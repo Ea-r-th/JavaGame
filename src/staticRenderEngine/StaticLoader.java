@@ -13,7 +13,7 @@ import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StaticLoader {
+public class StaticLoader { //I'm not gonna comment much on this one, if you want to know how a loader class works check out the main loader in RenderEngine
 
     private static List<Integer> vaoList = new ArrayList<>();
     private static List<Integer> vboList = new ArrayList<>();

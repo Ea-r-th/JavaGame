@@ -31,7 +31,7 @@ public class MainMenuManager {
 
     FontType font = new FontType(fontLoader.loadTexture("arial"), new File("res/fonts/arial.fnt"));
 
-    public void update(){
+    public void update(){//Same thing as the mainGameManager, just ask Luca if you have questions
 
         GUIText text = new GUIText((String.valueOf((DisplayManager.getFrameTimeSeconds() * 1000))),1,font,new Vector2f(1, 0),10, false);
         GUIText text2 = new GUIText("When the", 5, font, new Vector2f(0.5f, -1f), 1, false);

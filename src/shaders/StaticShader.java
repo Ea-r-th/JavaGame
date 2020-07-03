@@ -7,8 +7,8 @@ import tools.MathProgram;
 
 public class StaticShader extends ShaderProgram {
 
-    private static final String VERTEX_FILE = "src/shaders/vertex.glsl";
-    private static final String FRAGMENT_FILE = "src/shaders/fragment.glsl";
+    private static final String VERTEX_FILE = "src/shaders/vertex.glsl"; //Defines path to vertex shader
+    private static final String FRAGMENT_FILE = "src/shaders/fragment.glsl"; //Path to fragment shader
 
     private int location_transformationMatrix;
     private int location_projectionMatrix;
@@ -18,17 +18,17 @@ public class StaticShader extends ShaderProgram {
 
     public StaticShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
-    }
+    } //Creates new program thingy or something
 
     @Override
-    protected void bindAttributes(){
+    protected void bindAttributes(){ //Binds the attributes to become ins for the vertex shader
         super.bindAttribute(0,"position");
         super.bindAttribute(1, "textureCoords");
         super.bindAttribute(2, "normal");
     }
 
     @Override
-    protected void getAllUniformLocations(){
+    protected void getAllUniformLocations(){ //Loads the uniform variables, this will need to happen for all uniforms you create
         location_transformationMatrix = super.getUniformLocation("transformationMatrix");
         location_projectionMatrix = super.getUniformLocation("projectionMatrix");
         location_viewMatrix = super.getUniformLocation("viewMatrix");

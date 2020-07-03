@@ -12,6 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OBJLoader {
+
+    /**
+     *
+     * @param fileName - name of the OBJ file
+     * @param loader - Just the loader being used
+     * @return - A new Raw Model that can be turned into textured model
+     */
     public static RawModel loadObjModel(String fileName, Loader loader)
     {
         FileReader fr = null;
@@ -106,7 +113,7 @@ public class OBJLoader {
         return loader.loadToVao(verticesArray, texturesArray, normalsArray,indicesArray);
     }
 
-    private static void processVertex(String[] vertexData, List<Integer> indices, List<Vector2f> textures,
+    private static void processVertex(String[] vertexData, List<Integer> indices, List<Vector2f> textures, //No idea what this does dont ask
                                       List<Vector3f> normals, float[] textureArray, float[] normalsArray)
     {
         //tells index of index positions

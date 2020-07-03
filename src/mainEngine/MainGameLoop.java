@@ -13,7 +13,7 @@ import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
-public class MainGameLoop {
+public class MainGameLoop { //No touchy touchy this class
     public static DisplayManager display = new DisplayManager();
     // The window handle
 

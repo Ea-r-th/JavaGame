@@ -5,28 +5,21 @@ import org.lwjgl.opengl.GL11;
 import staticRenderEngine.StaticModelShader;
 import staticRenderEngine.StaticRenderer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CrosshairManager {
-
-    private List<StaticEntity> crosshairList = new ArrayList<>();
 
     StaticModelShader shader = new StaticModelShader();
     StaticRenderer renderer = new StaticRenderer(shader);
 
     Crosshair crosshair = new Crosshair(0.05f, 0.05f, 1);
+    StaticEntity crosshairEntity = crosshair.createEntity(crosshair);
 
-    public void init() {
-        StaticEntity crosshairEntity = crosshair.createEntity(crosshair);
-        crosshairList.add(crosshairEntity);
-    }
+    public void init() {} //Don't need anything here yet
 
     public void renderCrosshair() {
         shader.start();
-        GL11.glDisable(GL11.GL_DEPTH_TEST);
-        renderer.render(crosshairList.get(0));
-        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glDisable(GL11.GL_DEPTH_TEST); //Disables the depth test so crosshair is not rendered over
+        renderer.render(crosshairEntity); //Renders crosshair. The crosshair entity will likely be overhauled if player customization is added.
+        GL11.glEnable(GL11.GL_DEPTH_TEST); //Re-enables depth test
         shader.stop();
     }
 }

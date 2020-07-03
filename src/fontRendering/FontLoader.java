@@ -14,7 +14,7 @@ public class FontLoader {
     private List<Integer> vboList = new ArrayList<>();
     private List<Integer> textures = new ArrayList<>();
 
-    public int loadVAO(float[] positions,float[] textureCoords){
+    public int loadVAO(float[] positions,float[] textureCoords){ //I'm not gonna comment much on this one, if you want to know how a loader class works check out the main loader in RenderEngine
         int vaoID = createVAO(); //calls createVAO class to create new vao
         storeDataInAttributeList(0,2,positions); //Stores float array of vertex positions to attribute number 0
         storeDataInAttributeList(1,2,textureCoords);

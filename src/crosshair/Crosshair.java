@@ -24,6 +24,12 @@ public class Crosshair {
         this.scale = scale;
     }
 
+    /**
+     * Creates a crosshair entity
+     * @param crosshair - Takes in a crosshair object
+     * @return - returns a new renderable static entity from crosshair values
+     */
+
     public StaticEntity createEntity(Crosshair crosshair){
         float positions[] = {
                 (-(crosshair.width) / aspectRatio), crosshair.height, 0,
@@ -50,6 +56,7 @@ public class Crosshair {
        return new StaticEntity(crosshairModel, MainGameManager.camera.getPositionX(), MainGameManager.camera.getPositionY(),MainGameManager.camera.getPositionZ(), crosshair.scale);
     }
 
+    //Just getters n setters
 
     public float getWidth() {
         return width;

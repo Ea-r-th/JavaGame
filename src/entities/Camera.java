@@ -1,14 +1,8 @@
 package entities;
 
-import display.DisplayManager;
 import org.joml.Vector3f;
 
-import java.awt.*;
-
-import static org.lwjgl.glfw.GLFW.*;
-
-public class Camera
-{
+public class Camera {
     private Vector3f position = new Vector3f(0f,0f,0f);
     private float pitch;
     private float yaw;

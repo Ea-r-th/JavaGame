@@ -21,8 +21,8 @@ void main() {
 
     gl_Position = projectionMatrix * viewMatrix * transformationMatrix * vec4(position.xyz,1.0);
     //color = vec3(position.x+0.5,0.0,position.y+0.5);
-    pass_textureCoords = textureCoords;
+    pass_textureCoords = textureCoords; //Passes the texture coordinates to the fragment shader
 
-    surfaceNormal = (transformationMatrix * vec4(normal,0.0)).xyz;
-    toLightVector = (lightPosition - worldPosition.xyz);
+    surfaceNormal = (transformationMatrix * vec4(normal,0.0)).xyz; //Normal vector
+    toLightVector = (lightPosition - worldPosition.xyz); //Vector towards the light
 }

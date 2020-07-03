@@ -7,7 +7,7 @@ public class StaticEntity {
     private float rotX, rotY, rotZ;
     private float scale;
 
-    public StaticEntity(StaticTexturedModel model, float rotX, float rotY, float rotZ, float scale) {
+    public StaticEntity(StaticTexturedModel model, float rotX, float rotY, float rotZ, float scale) { //Similar to an entity, but is used in the static renderer to render static models.
         this.model = model;
         this.rotX = rotX;
         this.rotY = rotY;

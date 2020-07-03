@@ -6,7 +6,7 @@ public class Button {
     public float x;
     public float y;
 
-    public Button(float width, float height, float x, float y){
+    public Button(float width, float height, float x, float y){ //Creates a button object
         this.width = width;
         this.height = height;
         this.x = x;

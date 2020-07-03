@@ -14,7 +14,7 @@ import java.nio.FloatBuffer;
 
 import static org.lwjgl.opengl.GL20.glUniformMatrix4fv;
 
-public abstract class ShaderProgram {
+public abstract class ShaderProgram { //Dont touch, however if you want to create a new staticShader/shader manager you need to extend this class.
 
     private int programID;
     private int vertexShaderID;
@@ -34,11 +34,16 @@ public abstract class ShaderProgram {
         getAllUniformLocations();
     }
 
+    /**
+     *
+     * @param uniformName - Name of the uniform variable(Whatever the attribute in the VAO is called
+     * @return - Location of the uniform in the VAO
+     */
     protected int getUniformLocation(String uniformName) {
         return GL20.glGetUniformLocation(programID, uniformName);
     }
 
-    protected abstract void getAllUniformLocations();
+    protected abstract void getAllUniformLocations(); //This will need to be defined in all extensions of this class, regardless if it has a method body or not, but this one will
 
     public void start() {
         GL20.glUseProgram(programID);
@@ -48,7 +53,7 @@ public abstract class ShaderProgram {
         GL20.glUseProgram(0);
     }
 
-    public void cleanUp() {
+    public void cleanUp() { //Cleans up
         stop();
         GL20.glDetachShader(programID, vertexShaderID);
         GL20.glDetachShader(programID, fragmentShaderID);
@@ -57,7 +62,7 @@ public abstract class ShaderProgram {
         GL20.glDeleteProgram(programID);
     }
 
-    protected abstract void bindAttributes();
+    protected abstract void bindAttributes(); //This will need to be defined in all extensions of this class, regardless if it has a method body or not, this probably will not
 
     protected void bindAttribute(int attribute, String variableName) {
         GL20.glBindAttribLocation(programID, attribute, variableName); //binds the attribute number of the VAO to the in variables in the vertex shader
@@ -85,7 +90,12 @@ public abstract class ShaderProgram {
         GL20.glUniform2f(location,vector.x,vector.y);
     }
 
-
+    /**
+     * Loads a vertex, fragment, or geometry shader file
+     * @param file - Path to the glsl file
+     * @param type - Vertex, fragment, or geometry
+     * @return
+     */
 
     private static int loadShader(String file, int type){
         StringBuilder shaderSource = new StringBuilder();

@@ -6,7 +6,7 @@ public class Display {
     public int height;
     public String title;
 
-    public Display(int width, int height, String title) {
+    public Display(int width, int height, String title) { //Creates a display object so we can get the width and height more easily
         this.width = width;
         this.height = height;
         this.title = title;

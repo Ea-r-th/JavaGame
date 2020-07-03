@@ -13,7 +13,7 @@ import static org.lwjgl.opengl.GL11C.glViewport;
 import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-public class DisplayManager {
+public class DisplayManager { //You guys most likely will never need to mess with this class
     //creates a new window
     public static long window;
     public static int width = 960;

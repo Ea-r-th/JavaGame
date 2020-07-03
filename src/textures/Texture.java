@@ -31,7 +31,7 @@ public class Texture {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        //????? Don't ask
         int[] data = new int[width * height];
         for (int i = 0; i < width * height; i++) {
             int a = (pixels[i] & 0xff000000) >> 24;

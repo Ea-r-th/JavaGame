@@ -22,6 +22,15 @@ public class Loader {
     private List<Integer> vboList = new ArrayList<>();
     private List<Integer> textures = new ArrayList<>();
 
+    /**
+     * Creates a rawModel out of the params
+     * @param positions - Array of vertex positions
+     * @param textureCoords - Array of texture coordinates
+     * @param normals - Array of normal vectors to be used for lighting
+     * @param indices - Array of indices to determine the order the vertices connect
+     * @return new Rawmodel to be turned into a texturedModel
+     */
+
     public RawModel loadToVao(float[] positions,float[] textureCoords, float[] normals, int[] indices){
         int vaoID = createVAO(); //calls createVAO class to create new vao
         bindIndicesBuffer(indices);
@@ -31,6 +40,12 @@ public class Loader {
         unbindVAO();
         return new RawModel(vaoID,indices.length);
     }
+
+    /**
+     * Loads a texture
+     * @param fileName The name of the texture file, this will be changed when more texture folders are added, but currently only the name is needed.
+     * @return ID of the new texture
+     */
 
     public int loadTexture(String fileName)
     {
@@ -52,6 +67,11 @@ public class Loader {
             GL11.glDeleteTextures(texture);
         }
     }
+
+    /**
+     * Creates a new vbo of an indices arrray
+     * @param indices the Array of indices to be bound
+     */
 
     private void bindIndicesBuffer(int[] indices)
     {

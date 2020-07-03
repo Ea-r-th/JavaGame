@@ -16,11 +16,19 @@ import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuLoader {
+public class MenuLoader { //I'm not gonna comment much on this one, if you want to know how a loader class works check out the main loader in RenderEngine
 
     private List<Integer> vaoList = new ArrayList<>();
     private List<Integer> vboList = new ArrayList<>();
     private List<Integer> textures = new ArrayList<>();
+
+    /**
+     *
+     * @param positions - Array of all vertex positions
+     * @param textureCoords - Array of texture coordinates
+     * @param indices - Array of indices
+     * @return a rawModel that can be used to create a texturedModel
+     */
 
     public RawModel loadToVao(float[] positions,float[] textureCoords, int[] indices){
         int vaoID = createVAO(); //calls createVAO class to create new vao

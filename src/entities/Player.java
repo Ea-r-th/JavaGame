@@ -6,11 +6,11 @@ import mainGame.MainGameManager;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 
-import static mainGame.MainGameManager.camera;
 import static org.lwjgl.glfw.GLFW.*;
 
-public class Player extends Entity
-{
+public class Player extends Entity { //This class is gonna need to be heavily touched up soon enough.
+
+    //TODO: Player ramp up and ramp down speed, implemented speed blocks, updated player model, proper speed resets(So you cant just hold another key to not get to the else statement)
 
     public float RUN_SPEED = 0.002f;
     public float sprintSpeed = 10;
@@ -29,20 +29,30 @@ public class Player extends Entity
     private float yBlock = 0.04f;
     private float zBlock = 0.04f;
 
+    /**
+     * Creates a new player object that can be rendered
+     * @param model - TexturedModel that will be the player model
+     * @param position - Position in the world
+     * @param rotX - X rotation
+     * @param rotY - Y rotation
+     * @param rotZ - Z rotation
+     * @param scale - Player size
+     * @param camera - Camera player uses
+     */
+
     public Player(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale, Camera camera) {
         super(model, position, rotX, rotY, rotZ, scale);
         camera.setPosition(position);
     }
 
-    public void move()
-    {
+    public void move() { //Called every frame, moves the player
         checkInputs();
         super.increaseRotation(0, currentTurnSpeed * DisplayManager.getFrameTimeSeconds(), 0);
         float distanceX = -currentZSpeed * DisplayManager.getFrameTimeSeconds();
         float distanceY  = currentYSpeed;
         float distanceZ = currentZSpeed * DisplayManager.getFrameTimeSeconds();
         float dx1 = (float) (distanceX * Math.sin(Math.toRadians((MainGameManager.camera.getYaw()))));
-        float dy = (float) (distanceY);
+        float dy =  (distanceY);
         float dz1 = (float) (distanceZ * Math.cos(Math.toRadians((MainGameManager.camera.getYaw()))));
         super.increasePosition(dx1, dy, dz1);
 
@@ -51,13 +61,9 @@ public class Player extends Entity
         float dx2 = (float) (distanceX2 * Math.cos(Math.toRadians((MainGameManager.camera.getYaw()))));
         float dz2 = (float) (distanceZ2 * Math.sin(Math.toRadians((MainGameManager.camera.getYaw()))));
         super.increasePosition(dx2, dy, dz2);
-        //System.out.println(dx + ", " + dy + ", " + dz);
-        //System.out.println(Math.toRadians((super.getRotY())));
-        //System.out.println(camera.getPosition());
-        //System.out.println(currentZSpeed);
     }
 
-    private void checkInputs(){
+    private void checkInputs(){ //Yanderedev code that moves the player given keybaord inputs, this needs to be reworked
         if(glfwGetKey(DisplayManager.window, GLFW_KEY_W) == 1 && glfwGetKey(DisplayManager.window, GLFW_KEY_S) != 1){
             currentZSpeed -= 0.02;
         }
@@ -77,14 +83,14 @@ public class Player extends Entity
             currentYSpeed -= 0.02;
         }
 
-        else{
+        else{ //This needs to be reworked, example: if the w key is held and then the d key is pressed before the w key is released, this else statement won't be called, and the z speed will be constant.
             currentZSpeed = 0;
             currentXSpeed = 0;
             currentYSpeed = 0;
         }
     }
 
-    public void moveCursor(){
+    public void moveCursor(){ //Sets a cursor callback, I have no clue what the hell this does but it works so don't touch it
         glfwSetCursorPosCallback(DisplayManager.window, new GLFWCursorPosCallback() {
             @Override
             public void invoke(long window, double xpos, double ypos) {
@@ -93,7 +99,7 @@ public class Player extends Entity
         });
     }
 
-    public void setCameraPosition(double xPos, double yPos, Camera camera){
+    public void setCameraPosition(double xPos, double yPos, Camera camera){ //Called in the callback, this is gonna have to change because of the camera bug when you look too far up
 
         if (firstMouse)
         {

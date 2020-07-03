@@ -70,8 +70,7 @@ public class MasterRenderer {
         entities.clear();
     }
 
-    private void createProjectionMatrix()
-    {
+    private void createProjectionMatrix() { //LITERALLY 0 GAME DEVELOPERS IN THE WORLD KNOW HOW THE HELL THIS WORKS DO NOT TOUCH IT FOR THE LOVE OF GOD
         float aspectRatio = (float) MainGameLoop.display.width / (float) MainGameLoop.display.height;
         float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV/2f))) * aspectRatio);
         float x_scale = y_scale / aspectRatio;
@@ -86,7 +85,7 @@ public class MasterRenderer {
         projectionMatrix._m33(0);
     }
 
-    public void prepare() {
+    public void prepare() { //Called every frame, enables depth test and clears the color to the values defined in the gamestate manager
         GL11.glEnable(GL_DEPTH_TEST);
         GL11.glClearColor(GameStateManager.stateR, GameStateManager.stateG, GameStateManager.stateB, GameStateManager.stateA);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);

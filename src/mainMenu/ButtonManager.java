@@ -18,7 +18,7 @@ public class ButtonManager {
     ButtonTools buttonTools = new ButtonTools();
     CursorTools cursorTools = new CursorTools();
 
-    public void init(){
+    public void init(){ //Here is where all the buttons are created and added to an arraylist
         buttonTools.createButton(buttons,1f,0.5f, -0.95f, 0.95f);
         buttonTools.createButton(buttons, 0.5f,1f, 0.45f, 0.95f);
         buttonTools.createButton(buttons, 0.5f,0.5f, 0.45f, -0.45f);
@@ -29,7 +29,7 @@ public class ButtonManager {
 
     }
 
-    public void renderAllButtons() {
+    public void renderAllButtons() { //Loops through the button list and renders them
         for (Button button : buttons) {
             cursorTools.getCursorPosition(camera);
 
