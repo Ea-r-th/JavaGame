@@ -50,17 +50,11 @@ public class ButtonTools {
                 1,0
         };
 
-        RawModel model = loader.loadToVao(vertices, textureCoords, indices);
-
         RawModel model3 = loader.loadToVao(vertices, textureCoords, indices);
         ModelTexture texture2 = new ModelTexture(loader.loadTexture("Image0"));
         TexturedModel texturedModel = new TexturedModel(model3, texture2);
 
         return new Entity(texturedModel, new Vector3f(x,y,0),0,0,0,1);
-    }
-
-    public void doAction(){
-
     }
 
     public void updateButton(Entity buttonEntity, Button button){ //Renders the onClick button entity when the cursor is detected over a button

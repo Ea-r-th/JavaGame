@@ -43,15 +43,15 @@ public class MainGameLoop {
         //LOGIC
         //---------------------------------------------------------------------------------
 
-        while ( !glfwWindowShouldClose(DisplayManager.window) ) {
+        while (!glfwWindowShouldClose(DisplayManager.window) ) { //Called every frame
             masterRenderer.prepare();
 
             display.resizeDisplay();
-            display.updateDisplay();
+            display.updateDisplay(); //Something for time idk
 
             //renderer.renderModel(model);
-            gameState.getStateInput();
-            gameState.renderGameState();
+            gameState.getStateInput(); //Logic for switching gamesates
+            gameState.renderGameState(); //Renders everything in seperate game states
 
             //Everything below this line needs to stay at the end of the loop
             glfwSwapBuffers(DisplayManager.window); // swap the color buffers

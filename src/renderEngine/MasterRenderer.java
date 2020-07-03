@@ -37,7 +37,7 @@ public class MasterRenderer {
     private StaticRenderer staticRenderer;
 
     public MasterRenderer(){
-        GL11.glEnable(GL11.GL_CULL_FACE);
+        GL11.glEnable(GL11.GL_CULL_FACE); //Gets rid of unseen faces
         GL11.glCullFace(GL11.GL_BACK);
         createProjectionMatrix();
         entityRenderer = new EntityRenderer(shader, projectionMatrix);
@@ -74,7 +74,7 @@ public class MasterRenderer {
     {
         float aspectRatio = (float) MainGameLoop.display.width / (float) MainGameLoop.display.height;
         float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV/2f))) * aspectRatio);
-        float x_scale = y_scale / aspectRatio ;
+        float x_scale = y_scale / aspectRatio;
         float frustum_length = FAR_PLANE - NEAR_PLANE;
 
         projectionMatrix = new Matrix4f();

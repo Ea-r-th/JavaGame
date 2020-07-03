@@ -2,7 +2,6 @@ package mainGame;
 
 import Models.RawModel;
 import Models.TexturedModel;
-import crosshair.Crosshair;
 import crosshair.CrosshairManager;
 import debugMenu.DebugMenuManager;
 import entities.*;
@@ -37,11 +36,11 @@ public class MainGameManager {
 
     Light light = new Light(new Vector3f(0,0,0), new Vector3f(1,1,1));
 
-    int isClickDown = 0;
+    int isClickDown = 0; //Checks if left mouse button is down
 
     public static Camera camera = new Camera();
 
-    private List<Entity> blocks = new ArrayList<>();
+    private List<Entity> blocks = new ArrayList<>(); //Creates the list of placed entities
 
     RawModel model2 = OBJLoader.loadObjModel("lowPolyTree", loader);
     ModelTexture texture = new ModelTexture(loader.loadTexture("Sonny"));
@@ -52,7 +51,7 @@ public class MainGameManager {
     //Generates Entity
     Entity entity2 = new Entity(texturedModel, new Vector3f(0,0,0),0,0,0,1);
 
-    List<Entity> allModels = new ArrayList<Entity>();
+    List<Entity> allModels = new ArrayList<Entity>(); //Random trees
     Random random = new Random();
 
     public Player player = new Player(texturedModel2, new Vector3f(camera.getPositionX(), camera.getPositionY(), camera.getPositionZ()), 0, 0, 0, 1, camera);
@@ -66,7 +65,7 @@ public class MainGameManager {
         }
     }
 
-    public void checkInput(){
+    public void checkInput(){ //All for placing trees
         if((glfwGetMouseButton(DisplayManager.window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)) {
             masterRenderer.processEntity(new Entity(texturedModel2, new Vector3f((float) cursorTools.cursorX, (float) cursorTools.cursorY, (camera.getPositionZ() - 2f)), 0, 0, 0, 1));
             isClickDown = 1;
@@ -79,7 +78,7 @@ public class MainGameManager {
     }
 
     public void init(){
-        createArmyOfCubes();
+        createArmyOfCubes(); //creates the horde of trees
         debugMenuManager.init();
 
         crosshairManager.init();
@@ -100,13 +99,13 @@ public class MainGameManager {
         shader.loadViewMatrix(camera);
         masterRenderer.processEntity(entity2);
 
-        for(Entity ranModel : allModels){
+        for(Entity ranModel : allModels){ //renders all the trees
             masterRenderer.processEntity(ranModel);
             ranModel.increaseRotation(0.0f,0.8f,0.0f);
             ranModel.increasePosition(0f,0f,0.5f);
         }
 
-        for(Entity block:blocks){
+        for(Entity block:blocks){ //Renders all the placed trees
             masterRenderer.processEntity(block);
         }
 

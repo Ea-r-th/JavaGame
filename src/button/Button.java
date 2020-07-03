@@ -1,7 +1,5 @@
 package button;
 
-import org.joml.Vector2f;
-
 public class Button {
     public float width;
     public float height;
