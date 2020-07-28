@@ -3,6 +3,7 @@ package shaders;
 import entities.Camera;
 import entities.Light;
 import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import tools.MathProgram;
 
 public class StaticShader extends ShaderProgram {
@@ -15,6 +16,9 @@ public class StaticShader extends ShaderProgram {
     private int location_viewMatrix;
     private int location_lightPosition;
     private int location_lightColor;
+    private int location_shineDamper;
+    private int location_reflectivity;
+    private int location_lightBias;
 
     public StaticShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
@@ -34,6 +38,15 @@ public class StaticShader extends ShaderProgram {
         location_viewMatrix = super.getUniformLocation("viewMatrix");
         location_lightPosition = super.getUniformLocation("viewMatrix");
         location_lightColor = super.getUniformLocation("lightColor");
+        location_lightBias = super.getUniformLocation("lightBias");
+        location_shineDamper = super.getUniformLocation("shineDamper");
+        location_reflectivity = super.getUniformLocation("reflectivity");
+    }
+
+    public void loadLightVariables(float damper, float reflectivity, Vector2f lightBias){
+        super.loadFloat(location_reflectivity, reflectivity);
+        super.loadFloat(location_shineDamper, damper);
+        super.loadVector2f(location_lightBias, lightBias);
     }
 
     public void loadTransformationMatrix(Matrix4f matrix)

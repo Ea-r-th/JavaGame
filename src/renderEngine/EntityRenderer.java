@@ -2,7 +2,6 @@ package renderEngine;
 
 import Models.TexturedModel;
 import entities.Entity;
-import mainEngine.MainGameLoop;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
@@ -22,6 +21,8 @@ public class EntityRenderer {
 
     public EntityRenderer(StaticShader shader, Matrix4f projectionMatrix) {
         this.shader = shader;
+        GL11.glEnable(GL11.GL_CULL_FACE);
+        GL11.glCullFace(GL11.GL_BACK);
         shader.start();
         shader.loadProjectionMatrix(projectionMatrix);
         shader.stop();
@@ -55,8 +56,9 @@ public class EntityRenderer {
     }
 
     private void prepareInstance(Entity entity) {
-        Matrix4f transformationMatrix = MathProgram.createTransformationMatrix(entity.getPosition(),
-                entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
-            shader.loadTransformationMatrix(transformationMatrix);
+        Matrix4f transformationMatrix = MathProgram.createTransformationMatrix(entity.getPosition(), entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
+        shader.loadTransformationMatrix(transformationMatrix);
+        ModelTexture texture = entity.getModel().getTexture();
+        shader.loadLightVariables(texture.getShineDamper(), texture.getReflectivity(), texture.getLightBias());
     }
 }

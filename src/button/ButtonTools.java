@@ -8,6 +8,7 @@ import mainMenu.MenuLoader;
 import mainMenu.MenuRenderer;
 import mainMenu.MenuShader;
 import org.joml.Vector3f;
+import org.lwjgl.opengl.GL11;
 import textures.ModelTexture;
 import tools.CursorTools;
 
@@ -70,13 +71,15 @@ public class ButtonTools {
      * @param button - the button (Stupid way of doing this, if someone wants to make a getButton method to get the button from an entity be my guest)
      */
 
-    public void updateButton(Entity buttonEntity, Button button){ //Renders the onClick button entity when the cursor is detected over a button
+    public void updateButton(Entity buttonEntity, Button button){
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
         if(detectHover(buttonEntity, button)){
             renderer.renderModel(buttonEntity, shader, onClickTexture);
         }
         else if(!detectHover(buttonEntity, button)){
             renderer.renderModel(buttonEntity, shader, defaultTexture);
         }
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
     }
 
     /**

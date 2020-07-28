@@ -1,12 +1,15 @@
 package renderEngine;
 
 import Models.TexturedModel;
+import chunks.Chunk;
+import chunks.ChunkRenderer;
+import chunks.ChunkShader;
+import display.DisplayManager;
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
 import gameState.GameStateManager;
-import mainEngine.MainGameLoop;
-import org.joml.Matrix4f;
+import openGLTools.OpenGLUtils;
 import org.lwjgl.opengl.GL11;
 import shaders.StaticShader;
 import staticRenderEngine.StaticModelShader;
@@ -17,31 +20,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.*;
 
 public class MasterRenderer {
 
-    public static float FOV = 70;
-    public static float NEAR_PLANE = 0.1f;
-    public static float FAR_PLANE = 1000;
-
-    private Matrix4f projectionMatrix;
-
     private Map<TexturedModel, List<Entity>> entities = new HashMap<>();
+    private List<Chunk> chunkList = new ArrayList<>();
 
     private StaticShader shader = new StaticShader();
     private EntityRenderer entityRenderer;
 
+    private ChunkRenderer chunkRenderer;
+    private ChunkShader chunkShader = new ChunkShader();
+
     private StaticModelShader staticShader = new StaticModelShader();
     private StaticRenderer staticRenderer;
 
+    static Camera camera = new Camera();
+
     public MasterRenderer(){
-        GL11.glEnable(GL11.GL_CULL_FACE); //Gets rid of unseen faces
-        GL11.glCullFace(GL11.GL_BACK);
-        createProjectionMatrix();
-        entityRenderer = new EntityRenderer(shader, projectionMatrix);
+        OpenGLUtils.enableDepthTest(true);
+        OpenGLUtils.enableBackCulling(true);
+        camera.getProjectionMatrix();
+        entityRenderer = new EntityRenderer(shader, camera.getProjectionMatrix());
         staticRenderer = new StaticRenderer(staticShader);
+        chunkRenderer = new ChunkRenderer(chunkShader,camera.getProjectionMatrix());
     }
 
     public void processEntity(Entity entity){
@@ -50,15 +54,20 @@ public class MasterRenderer {
         if(batch!=null){
             batch.add(entity);
         }else{
-            List<Entity> newBatch = new ArrayList<Entity>();
+            List<Entity> newBatch = new ArrayList<>();
             newBatch.add(entity);
             entities.put(entityModel, newBatch);
         }
     }
 
+    public void processChunk(Chunk chunk){
+        chunkList.add(chunk);
+    }
+
     public void cleanUp(){
         shader.cleanUp();
         staticShader.cleanUp();
+        chunkShader.cleanUp();
     }
 
     public void render(Light sun, Camera camera){
@@ -68,26 +77,32 @@ public class MasterRenderer {
         entityRenderer.renderModel(entities);
         shader.stop();
         entities.clear();
-    }
-
-    private void createProjectionMatrix() { //LITERALLY 0 GAME DEVELOPERS IN THE WORLD KNOW HOW THE HELL THIS WORKS DO NOT TOUCH IT FOR THE LOVE OF GOD
-        float aspectRatio = (float) MainGameLoop.display.width / (float) MainGameLoop.display.height;
-        float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV/2f))) * aspectRatio);
-        float x_scale = y_scale / aspectRatio;
-        float frustum_length = FAR_PLANE - NEAR_PLANE;
-
-        projectionMatrix = new Matrix4f();
-        projectionMatrix._m00(x_scale);
-        projectionMatrix._m11(y_scale);
-        projectionMatrix._m22(-((FAR_PLANE + NEAR_PLANE) / frustum_length));
-        projectionMatrix._m23(-1);
-        projectionMatrix._m32(-((2 * NEAR_PLANE * FAR_PLANE) / frustum_length));
-        projectionMatrix._m33(0);
+        chunkShader.start();
+        chunkShader.loadLight(sun);
+        chunkShader.loadViewMatrix(camera);
+        chunkRenderer.render(chunkList);
+        chunkShader.stop();
+        chunkList.clear();
     }
 
     public void prepare() { //Called every frame, enables depth test and clears the color to the values defined in the gamestate manager
-        GL11.glEnable(GL_DEPTH_TEST);
+        OpenGLUtils.enableDepthTest(true);
+        OpenGLUtils.enableBackCulling(true);
         GL11.glClearColor(GameStateManager.stateR, GameStateManager.stateG, GameStateManager.stateB, GameStateManager.stateA);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
+        if(glfwGetKey(DisplayManager.window, GLFW_KEY_F) == 1){
+            GL11.glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        }
+        else if(glfwGetKey(DisplayManager.window, GLFW_KEY_P) == 1){
+            GL11.glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+            GL11.glPointSize(10);
+        }
+        else{
+            GL11.glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        }
+    }
+
+    public static Camera getCamera() {
+        return camera;
     }
 }

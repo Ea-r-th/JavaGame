@@ -15,7 +15,7 @@ public class CursorTools {
     public static double cursorX;
     public static double cursorY;
 
-    public void getCursorPosition(Camera camera){ //Gets the cursor position with center 0,0, and with a window width and height of 2
+    public static void getCursorPosition(Camera camera){ //Gets the cursor position with center 0,0, and with a window width and height of 2
         IntBuffer w = BufferUtils.createIntBuffer(1);
         IntBuffer h = BufferUtils.createIntBuffer(1);
         glfwGetWindowSize(DisplayManager.window, w, h);

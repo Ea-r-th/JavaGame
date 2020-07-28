@@ -1,7 +1,9 @@
 package debugMenu;
 
+import button.ButtonTools;
 import display.DisplayManager;
 import entities.Player;
+import entities.StaticEntity;
 import fontMeshCreator.FontType;
 import fontMeshCreator.GUIText;
 import fontRendering.FontLoader;
@@ -10,6 +12,8 @@ import fontRendering.TextMaster;
 import mainGame.MainGameManager;
 import org.joml.Vector2f;
 import org.lwjgl.opengl.GL11;
+import staticRenderEngine.StaticModelShader;
+import staticRenderEngine.StaticRenderer;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -20,6 +24,8 @@ public class DebugMenuManager {
 
     TextMaster textMaster = new TextMaster();
     FontLoader fontLoader = new FontLoader();
+    StaticModelShader staticModelShader= new StaticModelShader();
+    StaticRenderer renderer = new StaticRenderer(staticModelShader);
 
     FontRenderer fontRenderer = new FontRenderer();
 
@@ -30,6 +36,7 @@ public class DebugMenuManager {
     FontType font = new FontType(fontLoader.loadTexture("franklin"), new File("res/fonts/franklin.fnt")); //Sets the font, fileName and the directory need to be changed to use different fonts
 
     List<GUIText> allTexts = new ArrayList<>();
+    List<StaticEntity> backEntities = new ArrayList<>();
 
     public void init() {
         textMaster.init();

@@ -26,4 +26,23 @@ public class MathProgram {
         viewMatrix.translate(negativeCameraPos);
         return viewMatrix;
     }
+
+    /**
+     * Calculates the normal of the triangle made from the 3 vertices. The vertices must be specified in counter-clockwise order.
+     * @param vertex0
+     * @param vertex1
+     * @param vertex2
+     * @return
+     */
+    public static Vector3f calculateNormal(Vector3f vertex0, Vector3f vertex1, Vector3f vertex2) {
+        Vector3f segmentA = vertex1.sub(vertex0);
+        Vector3f segmentB = vertex2.sub(vertex0);
+        Vector3f normal = segmentA.cross(segmentB);
+        normal.normalize();
+        return normal;
+    }
+
+    public static float clamp(float value, float min, float max){
+        return Math.max(Math.min(value, max), min);
+    }
 }

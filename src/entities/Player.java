@@ -65,16 +65,16 @@ public class Player extends Entity { //This class is gonna need to be heavily to
 
     private void checkInputs(){ //Yanderedev code that moves the player given keybaord inputs, this needs to be reworked
         if(glfwGetKey(DisplayManager.window, GLFW_KEY_W) == 1 && glfwGetKey(DisplayManager.window, GLFW_KEY_S) != 1){
-            currentZSpeed -= 0.02;
+            currentZSpeed -= 0.002;
         }
         else if(glfwGetKey(DisplayManager.window, GLFW_KEY_S) == 1 && glfwGetKey(DisplayManager.window, GLFW_KEY_W) != 1){
-            currentZSpeed += 0.02;
+            currentZSpeed += 0.002;
         }
         else if(glfwGetKey(DisplayManager.window, GLFW_KEY_A) == 1 && glfwGetKey(DisplayManager.window, GLFW_KEY_D) != 1){
-            currentXSpeed -= 0.02;
+            currentXSpeed -= 0.002;
         }
         else if(glfwGetKey(DisplayManager.window, GLFW_KEY_D) == 1 && glfwGetKey(DisplayManager.window, GLFW_KEY_A) != 1){
-            currentXSpeed += 0.02;
+            currentXSpeed += 0.002;
         }
         else if(glfwGetKey(DisplayManager.window, GLFW_KEY_SPACE) == 1 && glfwGetKey(DisplayManager.window, GLFW_KEY_LEFT_SHIFT) != 1){
             currentYSpeed += 0.02;

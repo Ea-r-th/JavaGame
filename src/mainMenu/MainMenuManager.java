@@ -2,11 +2,15 @@ package mainMenu;
 
 import display.DisplayManager;
 import entities.Camera;
+import entities.StaticEntity;
 import fontMeshCreator.FontType;
 import fontMeshCreator.GUIText;
 import fontRendering.FontLoader;
 import fontRendering.TextMaster;
 import org.joml.Vector2f;
+import staticRenderEngine.StaticModelShader;
+import staticRenderEngine.StaticRenderer;
+import tools.QuadGenerator;
 
 import java.io.File;
 
@@ -16,6 +20,8 @@ public class MainMenuManager {
 
     TextMaster textMaster = new TextMaster();
     FontLoader fontLoader = new FontLoader();
+    StaticModelShader staticShader = new StaticModelShader();
+    StaticRenderer staticRenderer = new StaticRenderer(staticShader);
 
     public static Camera camera = new Camera();
 
@@ -30,6 +36,7 @@ public class MainMenuManager {
     }
 
     FontType font = new FontType(fontLoader.loadTexture("arial"), new File("res/fonts/arial.fnt"));
+    StaticEntity test = QuadGenerator.createQuad(2,2,-1,1,"TestThing");
 
     public void update(){//Same thing as the mainGameManager, just ask Luca if you have questions
 
@@ -41,15 +48,19 @@ public class MainMenuManager {
 
 
         menuShader.start();
+        staticShader.start();
 
         menuShader.loadViewMatrix(camera);
 
         //*****************Rendering Starts here **********************
 
+        staticRenderer.render(test);
+
         buttonManager.renderAllButtons();
 
         textMaster.render();
 
+        staticShader.stop();
         menuShader.stop();
 
         textMaster.removeText(text);
